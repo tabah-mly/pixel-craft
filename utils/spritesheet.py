@@ -2,7 +2,7 @@ import pygame
 
 
 class SpriteSheet:
-    def __init__(self, sheet_path, scale=6, speed=200):
+    def __init__(self, sheet_path, scale=5, speed=0.2):
         self.speed = speed
         self.scale = scale
 
@@ -41,7 +41,7 @@ class SpriteSheet:
     def update(self, dt):
         self.timer += dt
         if self.timer >= self.speed:
-            self.timer = 0
+            self.timer -= self.speed
             self.frame_index = (self.frame_index + 1) % len(self.frames)
             self.image = self.frames[self.frame_index]
 

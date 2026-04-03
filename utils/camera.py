@@ -1,10 +1,15 @@
-class Camera:
-    def __init__(self, game):
-        self.game = game
-        self.x = 0
-        self.y = 0
+import pygame
 
-    def follow(self, target):
-        # Center on player
-        self.x = target.rect.centerx - (self.game.screen_width // 2)
-        self.y = target.rect.centery - (self.game.screen_height // 2)
+
+class Camera:
+    def __init__(self, width, height):
+        self.offset = pygame.Vector2(0, 0)
+        self.width = width
+        self.height = height
+
+    def follow(self, target_rect):
+        self.offset.x = target_rect.centerx - self.width // 2
+        self.offset.y = target_rect.centery - self.height // 2
+
+    def apply(self, rect):
+        return rect.move(-self.offset.x, -self.offset.y)
