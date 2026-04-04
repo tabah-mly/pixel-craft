@@ -79,6 +79,8 @@ class UpgradeMenu:
 
         stats_key = option["key"]
 
+        self.player.items["coin"] -= option["cost"]
+
         if stats_key == "hp":
             if player_stats["hp"] >= player_stats["max_hp"]:
                 return
@@ -88,8 +90,6 @@ class UpgradeMenu:
             player_stats[stats_key] += option["increment"]
             option["level"] += 1
             option["cost"] = option["level"] * option["base_cost"]
-
-        self.player.items["coin"] -= option["cost"]
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
