@@ -15,6 +15,13 @@ class Game(GameBase):
         self.clock = pygame.time.Clock()
 
         self.running = True
+        self.game_state = "playing"
+
+        self.initialize_object()
+
+        self.player = Player(self.screen_width//2, self.screen_height//2, self.pointer)
+        self.enemies = []
+        self.entities = [self.player] + self.enemies
 
     def event_listener(self):
         for event in pygame.event.get():
@@ -26,7 +33,8 @@ class Game(GameBase):
         pass
 
     def draw(self):
-        pass
+        self.background.draw(self.screen, self.camera.offset)
+        self.draw_entities()
 
     def start(self):
         while self.running:
