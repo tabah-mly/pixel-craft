@@ -23,6 +23,8 @@ class Game(GameBase):
         self.enemies = []
         self.entities = [self.player] + self.enemies
 
+        self.initialize_screen_time()
+
     def event_listener(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -30,11 +32,18 @@ class Game(GameBase):
             self.screen_event_listener(event)
 
     def update(self, dt):
-        pass
+        self.update_entities(dt)
+        self.camera.follow(self.player.rect)
+        self.attack_logic()
+        self.spawn_enemy(dt)
+        self.update_coin(dt)
+        self.clean_entities()
 
     def draw(self):
         self.background.draw(self.screen, self.camera.offset)
+        self.draw_coin()
         self.draw_entities()
+        self.pointer.draw(self.screen, self.camera)
 
     def start(self):
         while self.running:

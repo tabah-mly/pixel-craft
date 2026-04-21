@@ -27,11 +27,21 @@ class Player(PlayerBase):
         }
 
     def handle_input(self, dt):
-        pass
+        keys = pygame.key.get_pressed()
+        self.mouse_handler()
+
+        direction = pygame.Vector2(
+            keys[pygame.K_d] - keys[pygame.K_a],
+            keys[pygame.K_s] - keys[pygame.K_w],
+        )
+        self.move(direction, dt)
 
     def update(self, dt):
-        pass
+        self.handle_input(dt)
+        self.animator.update(dt)
+        self.update_projectiles(dt)
+        self.attack.update(dt)
 
     def draw(self, surface, camera):
         self.draw_sprites(surface, camera)
-        
+        self.draw_attack(surface, camera)
