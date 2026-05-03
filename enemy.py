@@ -20,17 +20,21 @@ class Enemy(EnemyBase):
             "speed": 100,
             "attack_range": 50,
         }
+
         self.apply_difficulty(difficulty)
 
     def update(self, dt):
         if not self.is_alive():
             return
+
         self.animator.update(dt)
+
         if self.is_hit(dt):
             return
+
         self.move(dt)
 
     def draw(self, surface, camera):
-        if not self.is_alive:
+        if not self.is_alive():
             return
         self.draw_sprites(surface, camera)

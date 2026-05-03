@@ -19,7 +19,7 @@ class Game(GameBase):
 
         self.initialize_object()
 
-        self.player = Player(self.screen_width//2, self.screen_height//2, self.pointer)
+        self.player = Player(width // 2, height // 2, self.pointer)
         self.enemies = []
         self.entities = [self.player] + self.enemies
 
@@ -32,18 +32,27 @@ class Game(GameBase):
             self.screen_event_listener(event)
 
     def update(self, dt):
+        if self.update_screen(dt):
+            return
+
+        self.check_game_over()
+        self.timer += dt
         self.update_entities(dt)
         self.camera.follow(self.player.rect)
         self.attack_logic()
+        self.difficult_handler(dt)
         self.spawn_enemy(dt)
         self.update_coin(dt)
         self.clean_entities()
 
     def draw(self):
+        self.screen.fill((0, 0, 0))
         self.background.draw(self.screen, self.camera.offset)
         self.draw_coin()
         self.draw_entities()
+        self.ui.draw(self.player, self.timer)
         self.pointer.draw(self.screen, self.camera)
+        self.draw_screen()
 
     def start(self):
         while self.running:
