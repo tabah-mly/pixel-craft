@@ -19,7 +19,6 @@ class Game(GameBase):
 
         self.initialize_object()
 
-        # Entities
         self.player = Player(width // 2, height // 2, self.pointer)
         self.enemies = []
         self.entities = [self.player] + self.enemies
@@ -30,7 +29,6 @@ class Game(GameBase):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
-
             self.screen_event_listener(event)
 
     def update(self, dt):
